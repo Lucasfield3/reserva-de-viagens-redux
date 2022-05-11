@@ -16,7 +16,7 @@ export const Header = () => {
             <Link className="reserva" to='/reservas'>
                 <div>
                     <strong>Minhas reservas</strong>
-                    <span>{reserveSizing - 1} reservas</span>
+                    <span>{reserveSizing} reservas</span>
                 </div>
             </Link>
 

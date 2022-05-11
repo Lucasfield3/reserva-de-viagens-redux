@@ -11,6 +11,7 @@ export interface Trip {
     title: string;
     status: boolean;
     image: string;
+    amount:number;
 }
 
 export const Home = () => {
@@ -30,6 +31,7 @@ export const Home = () => {
 
     const handleAdd = (trip:Trip)=>{
         dispatch(reserving(trip))
+        //dispatch(addAmount(trip))
     }
 
     return (
