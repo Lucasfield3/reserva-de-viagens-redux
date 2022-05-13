@@ -4,9 +4,11 @@ import { MdFlightTakeoff } from 'react-icons/md'
 
 import './style.css'
 import { useDispatch, useSelector } from "react-redux";
-import { reserving } from "../../store/reserve/reducer";
+import { reservingSuccess } from "../../store/reserve/reducer";
+import { fetchTripById } from "../../store/reserve/thunk";
+import { AppDispatch } from "../../store";
 
-export interface Trip {
+export type Trip = {
     id: number;
     title: string;
     status: boolean;
@@ -16,7 +18,7 @@ export interface Trip {
 
 export const Home = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const addTrip = useSelector(state => state)
     const [trips, setTrips] = useState<Trip[]>([])
 
@@ -29,8 +31,8 @@ export const Home = () => {
         loadTrips()
     }, [])
 
-    const handleAdd = (trip:Trip)=>{
-        dispatch(reserving(trip))
+    const handleAdd = async(id: number)=>{
+       await dispatch(fetchTripById(id))
         //dispatch(addAmount(trip))
     }
 
@@ -46,7 +48,7 @@ export const Home = () => {
 
                             <button
                                 type='button'
-                                onClick={() => handleAdd(trip)}
+                                onClick={() => handleAdd(trip.id)}
                             >
                                 <div>
                                     <MdFlightTakeoff size={16} color='#fff' />

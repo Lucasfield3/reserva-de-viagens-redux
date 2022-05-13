@@ -10,23 +10,12 @@ export const reserveSlice = createSlice({
   name: "reserve",
   initialState,
   reducers: {
-    reserving: (state, actions: PayloadAction<Trip>, value = 0) => {
+    reservingSuccess: (state, actions: PayloadAction<Trip>) => {
       return produce(state, (draft) => {
-        const tripIndex = draft.value.findIndex(
-          (trip) => trip.id === actions.payload.id
-        );
-
-        if (tripIndex >= 0) {
-          draft.value[tripIndex].amount += 1;
-        } else {
-          draft.value.push({
-            ...actions.payload,
-            amount: 1,
-          });
-        }
+        draft.value.push(actions.payload)
       });
     },
-
+    
     removeTrip: (state, actions: PayloadAction<number>) => {
       return produce(state, (draft) => {
         const tripIndex = draft.value.findIndex(
@@ -38,9 +27,28 @@ export const reserveSlice = createSlice({
         }
       });
     },
+
+    updateAmount: (
+      state,
+      actions: PayloadAction<{ id: number; amount: number }>
+    ) => {
+      if (actions.payload.amount <= 0) {
+        return state;
+      }
+      return produce(state, (draft) => {
+        const tripIndex = draft.value.findIndex(
+          (trip) => trip.id === actions.payload.id
+        );
+
+        if (tripIndex >= 0) {
+          draft.value[tripIndex].amount = actions.payload.amount;
+        }
+      });
+    },
   },
 });
 
-export const { reserving, removeTrip } = reserveSlice.actions;
+export const { reservingSuccess, removeTrip, updateAmount } =
+  reserveSlice.actions;
 
 export default reserveSlice.reducer;
