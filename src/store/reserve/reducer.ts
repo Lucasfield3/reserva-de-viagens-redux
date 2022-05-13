@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Trip } from "../../pages/Home";
 import { produce } from "immer";
+import { Stock } from "./thunk";
 
 const initialState = {
   value: [] as Trip[],
@@ -28,13 +29,10 @@ export const reserveSlice = createSlice({
       });
     },
 
-    updateAmount: (
+    updateAmountSuccess: (
       state,
-      actions: PayloadAction<{ id: number; amount: number }>
+      actions: PayloadAction<Stock>
     ) => {
-      if (actions.payload.amount <= 0) {
-        return state;
-      }
       return produce(state, (draft) => {
         const tripIndex = draft.value.findIndex(
           (trip) => trip.id === actions.payload.id
@@ -48,7 +46,7 @@ export const reserveSlice = createSlice({
   },
 });
 
-export const { reservingSuccess, removeTrip, updateAmount } =
+export const { reservingSuccess, removeTrip, updateAmountSuccess } =
   reserveSlice.actions;
 
 export default reserveSlice.reducer;

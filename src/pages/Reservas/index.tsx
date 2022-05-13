@@ -1,14 +1,15 @@
 import { MdDelete, MdRemoveCircle, MdAddCircle } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { removeTrip, updateAmount } from '../../store/reserve/reducer';
+import { AppDispatch, RootState } from '../../store';
+import { removeTrip} from '../../store/reserve/reducer';
+import { Stock, updateAmount } from '../../store/reserve/thunk';
 import { Trip } from '../Home';
 import './style.css'
 
 export const Reservas = () => {
     const reserves = useSelector((state:RootState)=> state.reserve.value)
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     
     const handleRemove = (id:number)=>{
         dispatch(removeTrip(id))

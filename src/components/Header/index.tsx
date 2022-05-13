@@ -13,12 +13,12 @@ export const Header = () => {
             <Link to='/'>
                 <img className="logo" src={logo} alt="Logo do projeto" />
             </Link>
-            <Link className="reserva" to='/reservas'>
+            <div className="reserva">
                 <div>
                     <strong>Minhas reservas</strong>
                     <span>{reserveSizing} reservas</span>
                 </div>
-            </Link>
+            </div>
 
         </header>
     );
